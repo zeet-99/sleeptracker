@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sleep Tracker</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⭐%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="aur a1"></div><div class="aur a2"></div><div class="aur a3"></div><div id="stars"></div>
+<main>
+
+<section class="view on" id="v-home">
+  <div class="hero">
+    <div class="scene"><div class="moon"></div><span class="cl c1">☁️</span><span class="cl c2">☁️</span><span class="zz">z z Z</span></div>
+    <h1 class="grad">Tidur nyenyak,<br>hari lebih cerah.</h1>
+    <p class="lead">Catat jam tidurmu, dapatkan skor 0–100, lalu pelajari apa yang perlu diubah supaya bangunmu lebih segar.</p>
+    <button class="btn" data-go="cek">Mulai cek tidur</button>
+    <div class="feats">
+      <div class="feat glass"><b>⏱️</b><h3>Durasi otomatis</h3><p>Isi jam tidur dan jam bangun, sisanya kami hitung.</p></div>
+      <div class="feat glass"><b>🌟</b><h3>Skor tidur</h3><p>Gabungan durasi, rasa bangunmu, dan kebiasaan malammu.</p></div>
+      <div class="feat glass"><b>📈</b><h3>Riwayat mingguan</h3><p>Lihat grafik 7 malam terakhir dan temukan polanya.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-cek">
+  <div class="bar"><i id="prog"></i></div>
+  <div class="wrap glass panel">
+    <div class="st" id="s1">
+      <h2>Usiamu berapa?</h2><p>Usia menentukan berapa jam tidur yang ideal untukmu.</p>
+      <label for="age">Usia (tahun)</label><input id="age" type="number" min="6" max="110" inputmode="numeric" placeholder="contoh: 20">
+      <div class="err" id="e1"></div>
+      <button class="btn wide" id="n1">Lanjut</button>
+    </div>
+    <div class="st" id="s2" hidden>
+      <h2>Semalam kamu tidur jam berapa?</h2><p>Durasinya langsung dihitung saat kamu mengisi.</p>
+      <div class="row"><div><label for="bed">Jam tidur</label><input id="bed" type="time" value="22:30"></div><div><label for="wake">Jam bangun</label><input id="wake" type="time" value="05:30"></div></div>
+      <div class="live"><span id="live"></span><small>total waktu di tempat tidur</small></div>
+      <button class="btn wide" id="n2">Lanjut</button><button class="ghost wide" data-step="1">Kembali</button>
+    </div>
+    <div class="st" id="s3" hidden>
+      <h2>Bangunmu terasa gimana?</h2>
+      <div class="qs" id="qs"><button data-q="1">😫</button><button data-q="2">😕</button><button data-q="3">😐</button><button data-q="4">🙂</button><button data-q="5">😍</button></div>
+      <label>Apa yang kamu lakukan kemarin? (boleh lebih dari satu)</label>
+      <div class="chips" id="chips"><button data-h="-4">☕ Kafein malam</button><button data-h="-4">📱 Main HP sebelum tidur</button><button data-h="-4">😰 Banyak pikiran</button><button data-h="-4">🍔 Makan berat malam</button><button data-h="4">🏃 Olahraga</button></div>
+      <div class="err" id="e3"></div>
+      <button class="btn wide" id="n3">Lihat hasil</button><button class="ghost wide" data-step="2">Kembali</button>
+    </div>
+    <div class="st load" id="s4" hidden><div class="spin">🌙</div><h3 id="lt">Menghitung siklus tidur…</h3></div>
+  </div>
+  <div class="wrap"><div class="fact" id="fact"></div></div>
+</section>
+
+<section class="view" id="v-hasil">
+  <div class="wrap glass panel">
+    <div class="c">
+      <p style="margin:0" id="hi"></p>
+      <div class="ring"><svg width="200" height="200" viewBox="0 0 200 200"><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#a5f3fc"/></linearGradient></defs><circle class="tr" cx="100" cy="100" r="80"/><circle class="pg" id="pg" cx="100" cy="100" r="80"/></svg><div class="in"><span class="n" id="sc">0</span><small>skor tidur</small></div></div>
+      <span class="badge" id="badge"></span>
+    </div>
+    <div class="mini"><div><b id="mdur"></b><small>durasi</small></div><div><b id="mcyc"></b><small>siklus tidur</small></div><div><b id="mq"></b><small>rasa bangun</small></div></div>
+    <div class="cyc" id="cyc"></div>
+    <p class="cyt" id="cyt"></p>
+    <details><summary>Apa itu siklus tidur?</summary>
+      <p>Tidurmu bukan satu blok panjang. Sepanjang malam, otakmu mengulang pola yang sama: tidur ringan, tidur dalam, lalu fase bermimpi (REM). Satu putaran disebut satu siklus.</p>
+      <p>Satu siklus berlangsung sekitar 90 menit, tapi tiap orang berbeda (kira-kira 70–120 menit). Dalam semalam biasanya ada 4–6 siklus.</p>
+      <p><b>Cara membaca hasilmu:</b> angka di atas, misalnya 5.0×, artinya tidurmu setara sekitar 5 siklus. Tiap batang berwarna adalah satu siklus yang kamu selesaikan.</p>
+      <p>Bangun di tengah tidur dalam cenderung terasa berat dan pusing, sedangkan bangun di sela siklus biasanya lebih segar. Ini hanya perkiraan, bukan aturan pasti.</p>
+      <p class="src">Sumber: <a href="https://www.ncbi.nlm.nih.gov/books/NBK526132/" target="_blank" rel="noopener">StatPearls (NCBI Bookshelf)</a> dan <a href="https://www.sleepfoundation.org/sleep-phases/stages-of-sleep" target="_blank" rel="noopener">Sleep Foundation</a>. Rata-rata 90 menit adalah angka umum, bukan angka pasti untuk tiap orang.</p>
+    </details>
+    <div class="edu"><p id="edu"></p></div>
+    <p class="src">Sumber rentang durasi tidur: <a href="https://www.sleepfoundation.org/sleep-duration-recommendations" target="_blank" rel="noopener">National Sleep Foundation (2015)</a>. Skor tidur dihitung oleh Nyenyak sendiri dari durasi, rasa bangun, dan kebiasaanmu, jadi bukan standar medis.</p>
+    <button class="ghost wide" id="tg">Apa yang harus dilakukan? ▾</button>
+    <div class="tips" id="tips"><div id="tl"></div></div>
+    <button class="btn wide" data-go="cek">Cek tidur lagi</button>
+    <button class="ghost wide" data-go="riwayat">Lihat riwayat</button>
+  </div>
+</section>
+
+<section class="view" id="v-riwayat">
+  <div class="wrap">
+    <h2>Riwayat tidur</h2><p id="avg">Memuat…</p>
+    <div class="chart glass" id="chart"></div>
+    <div id="hist"></div>
+  </div>
+</section>
+
+<section class="view" id="v-belajar">
+  <h2>Kenali tidurmu</h2><p>Satu malam tidur terdiri dari beberapa siklus, masing-masing sekitar 90 menit.</p>
+  <div class="phases">
+    <div class="ph glass"><b>🌤️</b><h3>Tidur ringan</h3><p>Tubuh mulai rileks dan mudah terbangun. Sekitar separuh malam dihabiskan di fase ini.</p></div>
+    <div class="ph glass"><b>🌊</b><h3>Tidur dalam</h3><p>Tubuh memperbaiki jaringan dan menguatkan daya tahan. Paling banyak terjadi di paruh awal malam.</p></div>
+    <div class="ph glass"><b>💭</b><h3>Fase REM</h3><p>Otak aktif bermimpi dan merapikan ingatan. Semakin panjang menjelang pagi.</p></div>
+  </div>
+  <h3 style="margin-top:26px">Mitos atau fakta?</h3>
+  <details><summary>Tidur sedikit bisa “dibayar” di akhir pekan</summary><p>Mitos sebagian. Tidur ekstra membantu sedikit, tetapi jam tidur yang teratur setiap hari jauh lebih baik untuk tubuh.</p></details>
+  <details><summary>Minum kopi sore tidak memengaruhi tidur</summary><p>Mitos. Efek kafein bisa bertahan 6 jam atau lebih, dan bisa membuat tidurmu lebih dangkal.</p></details>
+  <details><summary>Ruangan gelap dan sejuk membantu tidur</summary><p>Fakta. Cahaya menekan hormon melatonin, dan suhu kamar yang sejuk membantu tubuh masuk ke tidur dalam.</p></details>
+  <details><summary>Tidur siang itu buruk</summary><p>Tergantung durasinya. Tidur siang 15–20 menit menyegarkan, tetapi yang terlalu lama bisa mengganggu tidur malam.</p></details>
+<details><summary>Alkohol bikin tidur lebih nyenyak</summary><p>Mitos. Alkohol memang bisa membuatmu cepat mengantuk, tetapi tidur jadi lebih terpecah dan kamu sering terbangun di paruh akhir malam, sehingga bangun kurang segar.</p></details>
+<details><summary>Main HP sebelum tidur tidak masalah</summary><p>Mitos. Cahaya layar dan konten yang membuatmu terus menggulir bisa menunda rasa kantuk dan memperpendek waktu tidur. Coba jauhkan HP sekitar 1 jam sebelum tidur.</p></details>
+<details><summary>Mendengkur itu normal</summary><p>Mitos sebagian. Dengkur ringan sering tidak berbahaya. Tetapi dengkur keras yang disertai napas terhenti saat tidur atau rasa kantuk berat di siang hari bisa jadi tanda gangguan seperti sleep apnea. Sebaiknya periksakan ke dokter.</p></details>
+<details><summary>Makin tua, butuh tidur makin sedikit</summary><p>Mitos. Lansia tetap disarankan tidur sekitar 7–8 jam. Yang biasanya berubah adalah tidurnya jadi lebih ringan dan lebih sering terbangun, bukan kebutuhannya.</p></details>
+<details><summary>Badan bisa dilatih cukup tidur 4–5 jam</summary><p>Mitos. Rasa kantuk bisa terasa berkurang setelah terbiasa, tetapi fokus dan kewaspadaan tetap menurun tanpa kamu sadari.</p></details>
+<details><summary>Jam tidur dan bangun yang teratur itu penting</summary><p>Fakta. Jam yang konsisten membantu ritme alami tubuh, sehingga kamu lebih mudah mengantuk di malam hari dan bangun lebih segar.</p></details>
+<details><summary>Olahraga membantu tidur</summary><p>Fakta pada umumnya. Olahraga rutin membantu kualitas tidur. Waktu terbaiknya berbeda-beda: kalau olahraga berat di malam hari membuatmu susah tidur, geser ke pagi atau sore.</p></details>
+<p style="font-size:.8rem;margin-top:18px">Informasi ini bersifat umum dan bukan pengganti saran dokter. Rentang durasi tidur mengacu pada rekomendasi National Sleep Foundation (2015).</p>
+</section>
+
+</main>
+<div class="snd"><div class="sndp glass" id="sndp"><h3 style="font-size:1rem;margin-bottom:6px">🎹 Melodi tenang</h3><label for="vol">Volume</label><input id="vol" type="range" min="0" max="100" value="45"><button class="ghost" id="pz">⏸ Jeda</button></div><button id="snd" aria-label="Suara relaksasi">🎵</button></div>
+<nav id="nav"><button data-go="home" class="on"><b>🏠</b>Beranda</button><button data-go="cek"><b>🌙</b>Cek tidur</button><button data-go="riwayat"><b>📊</b>Riwayat</button><button data-go="belajar"><b>📚</b>Belajar</button></nav>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
